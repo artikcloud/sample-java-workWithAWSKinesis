@@ -1,4 +1,4 @@
-package cloud.artik.example.kinesis_streams_consumer;
+package cloud.artik.example.kinesis_stream_consumer;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.json.JSONObject;
 
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.elasticbeanstalk.model.SystemStatus;
 import com.amazonaws.services.kinesis.*;
 import com.amazonaws.services.kinesis.model.*;
 import com.amazonaws.regions.*;

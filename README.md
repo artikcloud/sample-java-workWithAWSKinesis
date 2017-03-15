@@ -23,7 +23,7 @@ After completing this sample, you will learn the following objectives:
 ### Setup the AWS Kinesis Java project
 
  1. Clone this sample application if you haven't already done so.
- 2. Cd to `kinesis-streams-consumer` directory and run the following build command at in this directory:
+ 2. Cd to `kinesis-stream-consumer` directory and run the following build command at in this directory:
 
   ~~~shell
   mvn clean package
