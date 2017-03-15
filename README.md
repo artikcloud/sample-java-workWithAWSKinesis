@@ -14,6 +14,7 @@ After completing this sample, you will learn the following objectives:
 - Apache Maven 3.0.5 or above
 - ARTIK Cloud SDK for Java
 - [AWS SDK for Java](https://aws.amazon.com/developers/getting-started/java/)
+- [Amazon Kinesis Streams setup](http://docs.aws.amazon.com/streams/latest/dev/before-you-begin.html)
 
 ## Setup / Installation
 
