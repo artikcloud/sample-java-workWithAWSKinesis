@@ -32,9 +32,11 @@ After completing this sample, you will learn the following objectives:
   The executable `target/read-stream-x.x.jar` is generated under the target directory.
 
 ## Play with the system
-Are you ready to have fun? 
+Are you ready to have fun?
 
- 1. Start Kinesis stream read app. Run the following command at the directory where the JAR file is located:
+
+ 1. Create a Kinesis stream with *one* shard on aws site. For example, you can do it using the [AWS Kinesis Console](http://docs.aws.amazon.com/streams/latest/dev/managing-streams-console.html).  
+ 2. Start Kinesis stream read app. Run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar read-stream-x.x.jar k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
