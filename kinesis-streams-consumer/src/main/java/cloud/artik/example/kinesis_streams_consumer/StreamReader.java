@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.json.JSONObject;
 
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.elasticbeanstalk.model.SystemStatus;
 import com.amazonaws.services.kinesis.*;
 import com.amazonaws.services.kinesis.model.*;
 import com.amazonaws.regions.*;
@@ -15,18 +16,22 @@ import com.amazonaws.regions.*;
  * Kinesis stream consumer App that shows received ARTIK Cloud messages
  *
  */
-public class App 
+public class StreamReader 
 {
+    private static String amazonAccessKey = null;
+    private static String amazonSecretKey = null;
+    private static String amazonStreamName = null;
+    private static String amazonRegionName = null;
+
+    private static final int EXPECTED_ARGUMENT_NUMBER = 8;
+
     @SuppressWarnings("deprecation")
 	public static void main( String[] args )
     {
-    	// TODO should obtain these from input argument
-    	// Configuration for Kinesis stream
-    	String amazonAccessKey = "YOUR_AWSAccessKeyId";
-    	String amazonSecretKey = "YOUR_AWSSecretKey";
-    	String amazonStreamName = "akcstream";
-    	String amazonRegionName = "us-west-1";
-    	
+        if (!succeedParseCommand(args)) {
+            return;
+        }
+
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(amazonAccessKey, amazonSecretKey);
 		AmazonKinesisClient client = new AmazonKinesisClient(awsCredentials);
 		client.setRegion(RegionUtils.getRegion(amazonRegionName));
@@ -91,4 +96,43 @@ public class App
         }
         
     }//end of Main
+    
+    ////////////////////////////////////////////
+   // Helper functions
+   private static boolean succeedParseCommand(String args[]) {
+       // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
+       if (args.length != EXPECTED_ARGUMENT_NUMBER) {
+           printUsage();
+           return false; 
+       }
+       int index = 0;
+       while (index < args.length) {
+           String arg = args[index];
+           if ("-k".equals(arg)) {
+               ++index; // Move to the next argument the value of device id
+               amazonAccessKey = args[index];
+           } else if ("-s".equals(arg)) {
+               ++index; // Move to the next argument the value of device token
+               amazonSecretKey = args[index];
+           } else if("-r".equals(arg)) {
+               ++index; // Move to the next argument the value of device token
+               amazonRegionName = args[index];
+           } else if ("-n".equals(arg)) {
+               ++index; // Move to the next argument the value of firmware version after update
+               amazonStreamName = args[index];
+           }
+           ++index;
+       }
+       if (amazonAccessKey == null || amazonSecretKey == null || amazonRegionName == null || amazonStreamName == null) {
+           printUsage();
+           return false;
+       }
+       System.out.println("key:" + amazonAccessKey + " secrete:" + amazonSecretKey + " region:" + amazonRegionName + " stream:" + amazonStreamName);
+       return true;
+   }
+   
+   private static void printUsage() {
+       System.out.println("Usage: " + "read-stream -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME");
+   }
+
 }

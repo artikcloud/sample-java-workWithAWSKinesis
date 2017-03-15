@@ -2,17 +2,17 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>cloud.artik</groupId>
-  <artifactId>read-streams</artifactId>
+  <groupId>cloud.artik.example</groupId>
+  <artifactId>read-stream</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
-  <name>read-streams</name>
+  <name>read-stream</name>
   <description>Kinesis consumer messages from ARTIK Cloud</description>
 
   <properties>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <project.build.javaVersion>1.8</project.build.javaVersion>
-     <assembly.mainClass>cloud.artik.example.kinesis_streams_consumer.App</assembly.mainClass>
+     <assembly.mainClass>cloud.artik.example.kinesis_streams_consumer.StreamReader</assembly.mainClass>
      <maven.version>3.3</maven.version>
      
      <!--  What the following are used for? -->
