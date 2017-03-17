@@ -44,7 +44,7 @@ After completing this sample, you will learn the following objectives:
 Are you ready to have fun?
 
  1. Create a Kinesis stream with *one* shard on aws site. For example, you can do it using the [AWS Kinesis Console](http://docs.aws.amazon.com/streams/latest/dev/managing-streams-console.html).
- 1. Start subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
+ 2. Start subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar sub-kinesis-to-akc-x.x.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
@@ -54,7 +54,7 @@ Are you ready to have fun?
   response : {"data":{"id":"230117430e6e47","aid":"b6951bf387b84f63","messageType":"message","uid":"240","description":"This is a subscription to user devices","subscriptionType":"awsKinesis","awsKey":"ACRWQ","awsRegion":"us-west-1","awsKinesisStreamName":"akcstream","status":"ACTIVE","createdOn":1489701092932,"modifiedOn":1489701092932}}
   ~~~
   The "id" in the response json is the subscription ID. You will need this ID when deleting this subscription.  
- 1. Start device simulator
+ 3. Start device simulator
   ~~~shell
   $ rs 4debdd60ea9f4b1499c7c292b81f001f firesensorGS
   $ Using this token to send the messages: e53342c2f4b245c29b09665f32e4856e
@@ -69,7 +69,7 @@ Are you ready to have fun?
   Send #4 {"temp":4204.416015625,"onFire":false}
   ~~~
  
- 1. Start Kinesis stream read app. Open the second terminal and run the following command at the directory where the JAR file is located:
+ 4. Start Kinesis stream read app. Open the second terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar read-stream-x.x.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
@@ -84,7 +84,7 @@ Are you ready to have fun?
   ARTIK Cloud message: {"uid":"240b","cts":1489702619827,"data":{"temp":7064.10546875,"onFire":false},"mid":"5f5c8a68718642e490d641b734012b87","mv":1,"sdid":"4deb","sdtid":"dtce45703593274ba0b4feedb83bc152d8","ts":1489702619827}
   ~~~
   
- 1. After you are done, you can delete the subscription by running the following command:
+ 5. After you are done, you can delete the subscription by running the following command:
   ~~~shell
   java -jar sub-kinesis-to-akc-x.x.jar -del ARTIKCLOUD_SUBSCRIPTION_ID  -t ARTIKCLOUD_TOKEN
   ~~~
