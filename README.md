@@ -19,18 +19,18 @@ After completing this sample, you will learn the following objectives:
 
 ### Setup at ARTIK Cloud
 
- 1. Open [My ARTIK Cloud](https://my.artik.cloud/) and [connect a device](/documentation/tools/web-tools.html#connecting-a-device) (or use one that you already own) of the device type (for example, Demo Fire Sensor with unique name `cloud.artik.sample.demofiresensor`). We will use the device simulator to send data to ARTIK Cloud on behalf of this device. 
+ 1. Open [My ARTIK Cloud](https://my.artik.cloud/) and [connect a device](/documentation/tools/web-tools.html#connecting-a-device) (or use one that you already own) of the device type (for example, Demo Fire Sensor with unique name `cloud.artik.sample.demofiresensor`). You will use the device simulator to send data to ARTIK Cloud on behalf of this device later. 
  2. Open the [API Console](https://developer.artik.cloud/documentation/tools/api-console.html) and follow the instruction to [get the access token](https://developer.artik.cloud/documentation/introduction/hello-world.html#step-2-get-an-access-token). This access token is your [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token). Then [get your user ID](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-id). Note the user ID and access token. You will need them later.
  
 ### Setup at Amazon AWS
  
- 1. Sign up for an AWS account if you have not done so.
+ 1. [Sign up for an AWS account](http://docs.aws.amazon.com/streams/latest/dev/before-you-begin.html#setting-up-sign-up-for-aws) if you have not done so.
  2. Get the AWS access key and secret of your AWS user/role. You will need them later. 
- 3. Create a Kinesis stream with *one* shard on aws site. For example, you can do it using the [AWS Kinesis Console](http://docs.aws.amazon.com/streams/latest/dev/managing-streams-console.html). Noted the stream name (e.g. akcstream) and service region (e.g. us-west-1). You will need it later.
+ 3. Create a Kinesis stream with *one* shard on aws site. For example, you can do it using the [AWS Kinesis Console](http://docs.aws.amazon.com/streams/latest/dev/managing-streams-console.html). Noted the stream name (e.g. akcstream) and service region (e.g. us-west-1). You will need them later.
 
 ### Setup two Java projects
 
- 1. Clone this sample application if you haven't already done so.
+ 1. Clone this repository if you haven't already done so.
  2. Go to `sub-kinesis-stream-to-akc` directory and run the following build command:
   ~~~shell
   mvn clean package
@@ -52,7 +52,7 @@ After completing this sample, you will learn the following objectives:
 ## Send data to ARTIK Cloud and view via Kinesis stream
 Are you ready to have fun?
 
- 2. Start subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
+ 1. Start subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar sub-kinesis-to-akc-x.x.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
@@ -63,7 +63,7 @@ Are you ready to have fun?
   ~~~
   The "id" in the response json is the subscription ID. You will need this ID when deleting this subscription.
 
- 3. Start device simulator to send data to ARTIK Cloud on the behalf of the device that you pick in the setup. For example, the following is the output when simulating sending data on the behalf of my Demo Fire Sensor device.
+ 2. Start device simulator to send data to ARTIK Cloud on the behalf of the device that you pick in the setup. For example, the following is the output when simulating sending data on the behalf of my Demo Fire Sensor device.
   ~~~shell
   $ rs 4debdd60ea9f4b1499c7c292b81f001f firesensorGS
   $ Using this token to send the messages: e53342c2f4b245c29b09665f32e4856e
@@ -78,7 +78,7 @@ Are you ready to have fun?
   Send #4 {"temp":4204.416015625,"onFire":false}
   ~~~
  
- 4. Start Kinesis stream read app. Open the second terminal and run the following command at the directory where the JAR file is located:
+ 3. Start Kinesis stream read app. Open the second terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar read-stream-x.x.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
@@ -98,10 +98,10 @@ Are you ready to have fun?
   Received 11 records. sleep for 2s ...
   ~~~
   
- 5. After you are done, you can delete the subscription by running the following command:
+ 4. After you are done, you can delete the subscription by running the following command:
   ~~~shell
   java -jar sub-kinesis-to-akc-x.x.jar -del ARTIKCLOUD_SUBSCRIPTION_ID  -t ARTIKCLOUD_TOKEN
   ~~~
-  You get your subscription ID when making the subscription earlier.
+  You get your subscription ID when creating the subscription earlier. You should definitely delete the subscription should you want to start over with Step 1.
 
-The subscription created in Step 1 is to forward all device data of this user to Kinesis. If you have multiple devices sending data to ARTIK Cloud, you will see all of them in the log of Kinesis Stream reader app.
+The subscription created in Step 1 is to forward all device data of this user to Kinesis. If you have multiple devices sending data to ARTIK Cloud, you will see all of them in the printout of Kinesis Stream reader app.
