@@ -47,6 +47,7 @@ Are you ready to have fun?
   response code : 200
   response : {"data":{"id":"230117430e6e47","aid":"b6951bf387b84f63","messageType":"message","uid":"240","description":"This is a subscription to user devices","subscriptionType":"awsKinesis","awsKey":"ACRWQ","awsRegion":"us-west-1","awsKinesisStreamName":"akcstream","status":"ACTIVE","createdOn":1489701092932,"modifiedOn":1489701092932}}
   ~~~
+ 
  1. Start device simulator
   ~~~shell
   $ rs 4debdd60ea9f4b1499c7c292b81f001f firesensorGS
@@ -61,6 +62,7 @@ Are you ready to have fun?
   Got MID: f2c74e11d50e49d980a72a2cfe2cf4ea
   Send #4 {"temp":4204.416015625,"onFire":false}
   ~~~
+ 
  1. Start Kinesis stream read app. Open the second terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
   java -jar read-stream-x.x.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
@@ -75,4 +77,5 @@ Are you ready to have fun?
   Kinesis record: {SequenceNumber: 49571400525989845714667785659408476081610644500223361026,ApproximateArrivalTimestamp: Thu Mar 16 15:17:00 PDT 2017,Data: java.nio.HeapByteBuffer[pos=0 lim=261 cap=261],PartitionKey: 5f5c8a68718642e490d641b734012b87}
   ARTIK Cloud message: {"uid":"240b","cts":1489702619827,"data":{"temp":7064.10546875,"onFire":false},"mid":"5f5c8a68718642e490d641b734012b87","mv":1,"sdid":"4deb","sdtid":"dtce45703593274ba0b4feedb83bc152d8","ts":1489702619827}
   ~~~
+  
   1. some steps....
