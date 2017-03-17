@@ -87,7 +87,7 @@ public class Subscriber
          System.out.println("\nSending '" + method +"' request to URL : " + url);
          System.out.println("Request body: " + jsonBody);
         
-         // Send post request
+         // Send http request
          con.setDoOutput(true);
          DataOutputStream wr = new DataOutputStream(con.getOutputStream());
          wr.writeBytes(jsonBody);
