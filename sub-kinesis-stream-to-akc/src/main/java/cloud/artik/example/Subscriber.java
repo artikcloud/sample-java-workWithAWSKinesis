@@ -11,6 +11,7 @@ import java.util.Set;
 
 /**
  * Subscribe Amazon Kinesis stream to ARTIK Cloud
+ * Or delete the subscription
  * https://developer.artik.cloud/documentation/connect-the-data/push-to-amazon-kinesis.html
  *
  */
@@ -111,9 +112,19 @@ public class Subscriber
     
     ////////////////////////////////////////////
     // Helper functions
+    
+    // 1. usage help:
+	// java -jar target/sub-kinesis-to-akc.jar -h
+    // 2. subscribe
+    // java -jar target/sub-kinesis-to-akc.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
+	// 3. delete subscription
+    // java -jar target/sub-kinesis-to-akc.jar -del ARTIKCLOUD_SUBSCRIPTION_ID -t ARTIKCLOUD_TOKEN
     private boolean succeedParseCommand(String args[]) {
-        // java -jar target/sub-kinesis-to-akc.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
-        if (args.length != EXPECTED_ARGUMENT_NUMBER_SUB 
+    	if ("-h".equals(args[0])) {
+    		printUsage();
+    		return false;
+    	}
+    	if (args.length != EXPECTED_ARGUMENT_NUMBER_SUB 
             && args.length != EXPECTED_ARGUMENT_NUMBER_DELETE_SUB) {
             printUsage();
             return false; 

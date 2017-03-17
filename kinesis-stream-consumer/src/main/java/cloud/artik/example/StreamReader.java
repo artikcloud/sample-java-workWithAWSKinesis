@@ -104,8 +104,15 @@ public class StreamReader
     
     ////////////////////////////////////////////
     // Helper functions
+    // 1. usage help:
+	// java -jar target/read_stream.jar -h
+    // 2. read from stream
+    // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
     private boolean succeedParseCommand(String args[]) {
-       // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
+    	if ("-h".equals(args[0])) {
+    		printUsage();
+    		return false;
+    	}
        if (args.length != EXPECTED_ARGUMENT_NUMBER) {
            printUsage();
            return false; 
