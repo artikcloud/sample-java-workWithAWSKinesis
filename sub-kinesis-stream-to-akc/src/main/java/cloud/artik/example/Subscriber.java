@@ -22,8 +22,11 @@ public class Subscriber
     private String amazonRegionName = null;
     private String artikcloudUid = null;
     private String artikcloudAccessToken = null;
+    private String artikcloudSubscriptionID = null;
+    private boolean createSubscription = true;
 
-    private static final int EXPECTED_ARGUMENT_NUMBER = 12;
+    private static final int EXPECTED_ARGUMENT_NUMBER_SUB = 12;
+    private static final int EXPECTED_ARGUMENT_NUMBER_DELETE_SUB = 4;
     private final String SUBSCRIPTION_URL = "https://api.artik.cloud/v1.1/subscriptions";
 
     public static void main( String[] args )
@@ -34,7 +37,12 @@ public class Subscriber
             return;
             
         try {
-            subscriber.subToARTIKCloud();
+            if (subscriber.createSubscription) {
+                subscriber.subToARTIKCloud();
+            } else {
+                subscriber.deleteSubscription();
+            }
+            
         } catch (Exception e) {
             System.out.println("Receving exeption. Exiting ...");
             e.printStackTrace(System.out);
@@ -44,67 +52,73 @@ public class Subscriber
     
     // HTTP Post request
     private void subToARTIKCloud() throws Exception {
-		 URL obj = new URL(SUBSCRIPTION_URL);
-		 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		
-		 // Setting post request
-		 con.setRequestMethod("POST");
-		 con.setRequestProperty("Authorization", "Bearer " + artikcloudAccessToken);
-		 con.setRequestProperty("Content-Type", "application/json");
-		 
-		 // example of post data
-		 /*     {
-		         "messageType": "message",
-		         "uid": "240bc34cf61348e6a3255fe5d8539484",
-		         "subscriptionType": "awsKinesis",
-		         "awsKey": "AKYICRWQ",
-		         "awsSecret": "nwwx",
-		         "awsRegion": "us-west-1",
-		         "awsKinesisStreamName": "akcstream",
-		         "description": "This is a subscription to user devices"
-		         }
-		 */
-		 String postJsonData = "{\"messageType\": \"message\"," 
-		     + "\"uid\": \"" + artikcloudUid + "\","
-		     + "\"subscriptionType\": \"awsKinesis\","
-		     + "\"awsKey\": \"" + amazonAccessKey + "\","
-		     + "\"awsSecret\": \"" + amazonSecretKey + "\","
-		     + "\"awsRegion\": \"" + amazonRegionName + "\","
-		     + "\"awsKinesisStreamName\": \"" + amazonStreamName + "\","
-		     + "\"description\": \"This is a subscription to user devices\"}";
-		 System.out.println("\nSending 'POST' request to URL : " + SUBSCRIPTION_URL);
-		 System.out.println("Request body : " + postJsonData);
-		
-		 // Send post request
-		 con.setDoOutput(true);
-		 DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		 wr.writeBytes(postJsonData);
-		 wr.flush();
-		 wr.close();
-		
-		 BufferedReader in = new BufferedReader(
-		         new InputStreamReader(con.getInputStream()));
-		 String output;
-		 StringBuffer response = new StringBuffer();
-		 while ((output = in.readLine()) != null) {
-		  response.append(output);
-		 }
-		 in.close();
-		 
-		 //printing result from response
-		 int responseCode = con.getResponseCode();
-		 System.out.println("\nresponse code : " + responseCode);
-		 System.out.println("response : " + response.toString());
+        System.out.println("\nSubscribing Kinesis to ARTIK Cloud ... ");
+        String postJsonData = "{\"messageType\": \"message\"," 
+                + "\"uid\": \"" + artikcloudUid + "\","
+                + "\"subscriptionType\": \"awsKinesis\","
+                + "\"awsKey\": \"" + amazonAccessKey + "\","
+                + "\"awsSecret\": \"" + amazonSecretKey + "\","
+                + "\"awsRegion\": \"" + amazonRegionName + "\","
+                + "\"awsKinesisStreamName\": \"" + amazonStreamName + "\","
+                + "\"description\": \"This is a subscription to user devices\"}";
+        sendToARTIKCloud(SUBSCRIPTION_URL, "POST", postJsonData, artikcloudAccessToken);
     }
 
+    // HTTP DELETE request
+    // DELETE .../subscriptions/<subscriptionID>
+    private void deleteSubscription() throws Exception {
+        System.out.println("\nDeleting subscription with id " + artikcloudSubscriptionID);
+        String deleteURL = SUBSCRIPTION_URL + "/" + artikcloudSubscriptionID;
+        String postJsonData ="\"{}\""; //empty body
+        
+        sendToARTIKCloud(deleteURL, "DELETE", postJsonData, artikcloudAccessToken);
+    }
+    
+    private void sendToARTIKCloud(String url, String method, String jsonBody, String accessToken) throws Exception {
+         URL obj = new URL(url);
+         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+         
+         // Setting delete request
+         con.setRequestMethod(method);
+         con.setRequestProperty("Authorization", "Bearer " + accessToken);
+         con.setRequestProperty("Content-Type", "application/json");
+         
+         System.out.println("\nSending '" + method +"' request to URL : " + url);
+         System.out.println("Request body: " + jsonBody);
+        
+         // Send post request
+         con.setDoOutput(true);
+         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+         wr.writeBytes(jsonBody);
+         wr.flush();
+         wr.close();
+        
+         BufferedReader in = new BufferedReader(
+                 new InputStreamReader(con.getInputStream()));
+         String output;
+         StringBuffer response = new StringBuffer();
+         while ((output = in.readLine()) != null) {
+          response.append(output);
+         }
+         in.close();
+         
+         //printing result from response
+         int responseCode = con.getResponseCode();
+         System.out.println("\nresponse code : " + responseCode);
+         System.out.println("response : " + response.toString());
+        
+    }
+    
     ////////////////////////////////////////////
     // Helper functions
     private boolean succeedParseCommand(String args[]) {
         // java -jar target/sub-kinesis-to-akc.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
-        if (args.length != EXPECTED_ARGUMENT_NUMBER) {
+        if (args.length != EXPECTED_ARGUMENT_NUMBER_SUB 
+            && args.length != EXPECTED_ARGUMENT_NUMBER_DELETE_SUB) {
             printUsage();
             return false; 
         }
+        
         int index = 0;
         while (index < args.length) {
             String arg = args[index];
@@ -126,24 +140,42 @@ public class Subscriber
             } else if ("-n".equals(arg)) {
                 ++index;
                 amazonStreamName = args[index];
+            } else if ("-del".equals(arg)) { // delete subscription
+                ++index;
+                artikcloudSubscriptionID = args[index];
+                createSubscription = false;
             }
             ++index;
         }
-        if (artikcloudUid == null
+        
+        // create subscription
+        if (createSubscription) {
+             if (artikcloudUid == null
                 || artikcloudAccessToken == null
                 || amazonAccessKey == null 
                 || amazonSecretKey == null 
                 || amazonRegionName == null 
                 || amazonStreamName == null
-            ) {
+                ) {  // invalid input arguments
+                    printUsage();
+                    return false;
+             } else { // valid input arguments
+                 System.out.println("key:" + amazonAccessKey + " secrete:" + amazonSecretKey + " region:" + amazonRegionName + " stream:" + amazonStreamName);
+             }
+             return true;
+        }
+        
+        // delete subscription
+        if (artikcloudSubscriptionID == null || artikcloudAccessToken == null) { // invalid input arguments
             printUsage();
             return false;
         }
-        System.out.println("key:" + amazonAccessKey + " secrete:" + amazonSecretKey + " region:" + amazonRegionName + " stream:" + amazonStreamName);
+        System.out.println("ARTIKCLOUD_SUBSCRIPTION_ID:" + artikcloudSubscriptionID + " ARTIKCLOUD_TOKEN:" + artikcloudAccessToken);
         return true;
     }
     
     private static void printUsage() {
-        System.out.println("Usage: " + "sub-kinesis-to-akc -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME");
+        System.out.println("Usages \nSubscribe Kinesis stream to ARTIK Cloud:\n" + "sub-kinesis-to-akc -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME");
+        System.out.println("\nDelete Kinesis stream subscription:\n" + "sub-kinesis-to-akc -del ARTIKCLOUD_SUBSCRIPTION_ID -t ARTIKCLOUD_TOKEN");
     }
 }
