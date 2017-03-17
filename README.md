@@ -1,13 +1,17 @@
-# Build a sample system to play with the intergration between ARTIK Cloud and Kinesis
+# Build a sample system using ARTIK Cloud and Kinesis Stream integration 
 
-**Do not peek!!! Work in progress.**
+The sample system has the following functionalities:
+ 1. Subscribe AWS Kinesis Stream to ARTIK Cloud
+ 2. Devices send data to ARTIK Cloud
+ 3. Read device data from Kinesis stream
 
-TODO
+We build two applications to achieve Item 1 and 3, and use the Device Simulator instead of real devices to achieve Item 1. 
 
 After completing this sample, you will learn the following objectives:
 
-- TODO
-- TODO.
+- How to [subscribe Kinesis Stream to ARTIK Cloud](https://developer.artik.cloud/documentation/connect-the-data/push-to-amazon-kinesis.html) via API calls
+- How to read data from Kinesis Stream using AWS SDK for Java
+- How to [delete a subscription](https://developer.artik.cloud/documentation/api-reference/rest-api.html#delete-a-subscription) in ARTIK Cloud via API calls
 
 ## Requirements
 - Java version >= 1.8
@@ -104,4 +108,4 @@ Are you ready to have fun?
   ~~~
   You get your subscription ID when creating the subscription earlier. You should definitely delete the subscription should you want to start over with Step 1.
 
-The subscription created in Step 1 is to forward all device data of this user to Kinesis. If you have multiple devices sending data to ARTIK Cloud, you will see all of them in the printout of Kinesis Stream reader app.
+The subscription created in Step 1 forwards all device data of this user to Kinesis. If you have multiple devices sending data to ARTIK Cloud, you will see all of them in the printout of Kinesis Stream reader app.
