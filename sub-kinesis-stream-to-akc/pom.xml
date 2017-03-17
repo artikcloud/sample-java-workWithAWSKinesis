@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cloud.artik.example</groupId>
+  <artifactId>sub-kinesis-to-akc</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>subscribe-kinesis</name>
+  <url>http://maven.apache.org</url>
+ 
+  <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <project.build.javaVersion>1.8</project.build.javaVersion>
+     <assembly.mainClass>cloud.artik.example.Subscriber</assembly.mainClass>
+     <maven.version>3.3</maven.version>
+  </properties>
+  
+  <build>
+	  <plugins>
+           <!-- Set a JDK compiler level -->
+           <plugin>
+	           <groupId>org.apache.maven.plugins</groupId>
+	           <artifactId>maven-compiler-plugin</artifactId>
+	           <version>${maven.version}</version>
+	           <configuration>
+	               <source>${project.build.javaVersion}</source>
+	               <target>${project.build.javaVersion}</target>
+	               <encoding>${project.build.sourceEncoding}</encoding>
+	           </configuration>
+            </plugin>
+
+           <!-- Make this jar executable -->
+		   <plugin>
+	         <groupId>org.apache.maven.plugins</groupId>
+		     <artifactId>maven-assembly-plugin</artifactId>
+		     <configuration>
+               <appendAssemblyId>false</appendAssemblyId>
+               <attach>false</attach>
+  		       <descriptorRefs>
+		         <descriptorRef>jar-with-dependencies</descriptorRef>
+		       </descriptorRefs>
+		       <archive>
+		         <manifest>
+		           <mainClass>${assembly.mainClass}</mainClass>
+		         </manifest>
+		       </archive>
+		     </configuration>
+		     <executions>
+		       <execution>
+		         <id>create-my-bundle</id>
+		         <phase>package</phase>
+		         <goals>
+		           <goal>single</goal>
+		         </goals>
+		       </execution>
+		     </executions>
+		   </plugin>
+	  </plugins>
+  </build> 
+  
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
