@@ -1,4 +1,4 @@
-package cloud.artik.example.kinesis_stream_consumer;
+package cloud.artik.example;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -17,21 +17,27 @@ import com.amazonaws.regions.*;
  */
 public class StreamReader 
 {
-    private static String amazonAccessKey = null;
-    private static String amazonSecretKey = null;
-    private static String amazonStreamName = null;
-    private static String amazonRegionName = null;
-
     private static final int EXPECTED_ARGUMENT_NUMBER = 8;
 
-    @SuppressWarnings("deprecation")
-	public static void main( String[] args )
+    private String amazonAccessKey = null;
+    private String amazonSecretKey = null;
+    private String amazonStreamName = null;
+    private String amazonRegionName = null;
+
+
+    public static void main( String[] args )
     {
-        if (!succeedParseCommand(args)) {
+    	StreamReader streamReader = new StreamReader();
+        if (!streamReader.succeedParseCommand(args)) {
             return;
         }
-
+        
+        streamReader.readFromStream();
+    }//end of Main
+    
+    private void readFromStream() {
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(amazonAccessKey, amazonSecretKey);
+		@SuppressWarnings("deprecation")
 		AmazonKinesisClient client = new AmazonKinesisClient(awsCredentials);
 		client.setRegion(RegionUtils.getRegion(amazonRegionName));
          
@@ -93,12 +99,12 @@ public class StreamReader
             }
             shardIterator = recordResult.getNextShardIterator();
         }
-        
-    }//end of Main
+    	
+    }
     
     ////////////////////////////////////////////
-   // Helper functions
-   private static boolean succeedParseCommand(String args[]) {
+    // Helper functions
+    private boolean succeedParseCommand(String args[]) {
        // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
        if (args.length != EXPECTED_ARGUMENT_NUMBER) {
            printUsage();

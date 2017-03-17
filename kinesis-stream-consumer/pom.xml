@@ -12,7 +12,7 @@
   <properties>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <project.build.javaVersion>1.8</project.build.javaVersion>
-     <assembly.mainClass>cloud.artik.example.kinesis_stream_consumer.StreamReader</assembly.mainClass>
+     <assembly.mainClass>cloud.artik.example.StreamReader</assembly.mainClass>
      <maven.version>3.3</maven.version>
      
      <!--  What the following are used for? -->
