@@ -22,24 +22,25 @@ After completing this sample, you will learn the following objectives:
 ### Setup two Java projects
 
  1. Clone this sample application if you haven't already done so.
- 2. Cd to `sub-kinesis-stream-to-akc` directory and run the following build command at in this directory:
+ 2. Cd to `sub-kinesis-stream-to-akc` directory and run the following build command:
   ~~~shell
   mvn clean package
   ~~~
   The executable `target/sub-kinesis-to-akc-x.x.jar` is generated under the target directory.
-  3.  Cd to `kinesis-stream-consumer` directory of the source root and run the following build command at in this directory:
+
+  3.  Cd to `kinesis-stream-consumer` directory of the source root and run the following build command:
   ~~~shell
   mvn clean package
   ~~~
   The executable `target/read-stream-x.x.jar` is generated under the target directory.
 
-## Play with the system
+## Send data to ARTIK Cloud and see them in AWS Kinesis stream
 Are you ready to have fun?
 
  1. Create a Kinesis stream with *one* shard on aws site. For example, you can do it using the [AWS Kinesis Console](http://docs.aws.amazon.com/streams/latest/dev/managing-streams-console.html).
  1. Start subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
-  java -jar sub-kinesis-to-akc-x.x.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN-k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
+  java -jar sub-kinesis-to-akc-x.x.jar -u ARITKCLOUD_UID -t ARTIKCLOUD_TOKEN -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
   ~~~
   From the output, you should see the subscription succeeds with a response similar to the following
   ~~~shell
