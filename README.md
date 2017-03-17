@@ -54,7 +54,6 @@ Are you ready to have fun?
   response : {"data":{"id":"230117430e6e47","aid":"b6951bf387b84f63","messageType":"message","uid":"240","description":"This is a subscription to user devices","subscriptionType":"awsKinesis","awsKey":"ACRWQ","awsRegion":"us-west-1","awsKinesisStreamName":"akcstream","status":"ACTIVE","createdOn":1489701092932,"modifiedOn":1489701092932}}
   ~~~
   The "id" in the response json is the subscription ID. You will need this ID when deleting this subscription.  
-
  1. Start device simulator
   ~~~shell
   $ rs 4debdd60ea9f4b1499c7c292b81f001f firesensorGS
