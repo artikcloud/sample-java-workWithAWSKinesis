@@ -5,7 +5,7 @@ The sample system has the following functionalities:
  2. Devices send data to ARTIK Cloud
  3. Read device data from Kinesis Stream
 
-We build two applications to achieve Item 1 and 3, and use the Device Simulator instead of real devices to achieve Item 1. 
+We build two applications to achieve Item 1 and 3, and use the Device Simulator instead of real devices to achieve Item 2. 
 
 After completing this sample, you will learn the following objectives:
 
@@ -27,7 +27,6 @@ After completing this sample, you will learn the following objectives:
  2. Open the [API Console](https://developer.artik.cloud/documentation/tools/api-console.html) and follow the instruction to [get the access token](https://developer.artik.cloud/documentation/introduction/hello-world.html#step-2-get-an-access-token). This access token is your [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token). Then [get your user ID](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-id). Note the user ID and access token. You will need them later.
  
 ### Setup at Amazon AWS
- Are you ready to have fun?
 
  1. [Sign up for an AWS account](http://docs.aws.amazon.com/streams/latest/dev/before-you-begin.html#setting-up-sign-up-for-aws) if you have not done so.
  2. Get the AWS access key and secret of your AWS user/role. You will need them later. 
@@ -55,6 +54,7 @@ After completing this sample, you will learn the following objectives:
   ~~~
 
 ## Send data to ARTIK Cloud and read them from Kinesis stream
+ Are you ready to have fun?
 
  1. Start the subscription app to subscribe your Kinesis stream to ARTIK Cloud. Open a terminal and run the following command at the directory where the JAR file is located:
   ~~~shell
