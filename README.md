@@ -55,4 +55,22 @@ After completing this sample, you will learn the following objectives:
 
 ## Send data to ARTIK Cloud and read them from Kinesis stream
 
-Read the blog post [How to send ARTIK Cloud data to an Amazon Kinesis Stream](https://www.artik.io/blog/2017/04/how-to-send-artik-cloud-data-to-an-amazon-kinesis-stream/#section-demo) for the full details!
+Read the blog post [Build a system to send ARTIK Cloud data to an Amazon Kinesis Stream](https://www.artik.io/blog/2017/04/how-to-send-artik-cloud-data-to-an-amazon-kinesis-stream/#section-demo) for the full details!
+
+## More about ARTIK Cloud
+
+If you are not familiar with ARTIK Cloud, we have extensive documentation at https://developer.artik.cloud/documentation
+
+The full ARTIK Cloud API specification can be found at https://developer.artik.cloud/documentation/api-spec
+
+Check out advanced sample applications at https://developer.artik.cloud/documentation/samples/
+
+To create and manage your services and devices on ARTIK Cloud, create an account at https://developer.artik.cloud
+
+Also see the ARTIK Cloud blog for tutorials, updates, and more: http://artik.io/blog/cloud
+
+## License and Copyright
+
+Licensed under the Apache License. See [LICENSE](LICENSE).
+
+Copyright (c) 2017 Samsung Electronics Co., Ltd.
