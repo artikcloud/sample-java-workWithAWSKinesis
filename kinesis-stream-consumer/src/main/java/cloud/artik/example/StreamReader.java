@@ -107,30 +107,30 @@ public class StreamReader
     // 1. usage help:
 	// java -jar target/read_stream.jar -h
     // 2. read from stream
-    // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
+    // java -jar target/read_stream.jar -k AWS_KEY -s AWS_SECRET -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME
     private boolean succeedParseCommand(String args[]) {
-    	if ("-h".equals(args[0])) {
-    		printUsage();
-    		return false;
-    	}
        if (args.length != EXPECTED_ARGUMENT_NUMBER) {
            printUsage();
            return false; 
        }
+       if ("-h".equals(args[0])) {
+		  printUsage();
+		  return false;
+	   }
        int index = 0;
        while (index < args.length) {
            String arg = args[index];
            if ("-k".equals(arg)) {
-               ++index; // Move to the next argument the value of device id
+               ++index; // Move to the next argument 
                amazonAccessKey = args[index];
            } else if ("-s".equals(arg)) {
-               ++index; // Move to the next argument the value of device token
+               ++index; // Move to the next argument 
                amazonSecretKey = args[index];
            } else if("-r".equals(arg)) {
-               ++index; // Move to the next argument the value of device token
+               ++index; // Move to the next argument 
                amazonRegionName = args[index];
            } else if ("-n".equals(arg)) {
-               ++index; // Move to the next argument the value of firmware version after update
+               ++index; // Move to the next argument 
                amazonStreamName = args[index];
            }
            ++index;
@@ -144,7 +144,7 @@ public class StreamReader
    }
    
    private static void printUsage() {
-       System.out.println("Usage: " + "read-stream -k AWS_KEY -s AWS_SECRETE -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME");
+       System.out.println("Usage: " + "read-stream -k AWS_KEY -s AWS_SECRET -r KINESIS_STREAM_REGION -n KINESIS_STREAM_NAME");
    }
 
 }
